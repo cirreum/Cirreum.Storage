@@ -1,0 +1,100 @@
+﻿namespace Cirreum.Storage;
+
+using System.ComponentModel;
+
+public struct TransferOptions : IEquatable<TransferOptions> {
+
+	/// <summary>
+	/// The maximum length of a transfer in bytes. This property is a backwards-compatible
+	/// façade for <see cref="MaximumTransferSize"/>, which supports long values. Use
+	/// <see cref="MaximumTransferSize"/> for full access of supported values.
+	/// </summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public int? MaximumTransferLength {
+		readonly get => checked((int?)this.MaximumTransferSize);
+		set => this.MaximumTransferSize = value;
+	}
+
+	/// <summary>
+	/// The maximum length of an transfer in bytes.
+	/// </summary>
+	public long? MaximumTransferSize { get; set; }
+
+	/// <summary>
+	/// The maximum number of workers that may be used in a parallel transfer.
+	/// </summary>
+	public int? MaximumConcurrency { get; set; }
+
+	/// <summary>
+	/// The size of the first range request in bytes. Blobs smaller than this limit will
+	/// be downloaded in a single request. Blobs larger than this limit will continue being
+	/// downloaded in chunks of size <see cref="MaximumTransferSize"/>. This property is a
+	/// backwards-compatible façade for <see cref="MaximumTransferSize"/>, which supports
+	/// long values. Use <see cref="InitialTransferSize"/> for full access of supported values.
+	/// </summary>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public int? InitialTransferLength {
+		readonly get => checked((int?)this.InitialTransferSize);
+		set => this.InitialTransferSize = value;
+	}
+
+	/// <summary>
+	/// The size of the first range request in bytes. Blobs smaller than this limit will
+	/// be downloaded in a single request. Blobs larger than this limit will continue being
+	/// downloaded in chunks of size <see cref="MaximumTransferSize"/>.
+	/// </summary>
+	public long? InitialTransferSize { get; set; }
+
+	/// <summary>
+	/// Check if two ParallelTransferOptions instances are equal.
+	/// </summary>
+	/// <param name="obj">The instance to compare to.</param>
+	/// <returns>True if they're equal, false otherwise.</returns>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public override readonly bool Equals(object? obj)
+		=> obj is TransferOptions other
+		&& this.Equals(other)
+		;
+
+	/// <summary>
+	/// Get a hash code for the ParallelTransferOptions.
+	/// </summary>
+	/// <returns>Hash code for the ParallelTransferOptions.</returns>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public override readonly int GetHashCode()
+		=> this.MaximumTransferSize.GetHashCode()
+		^ this.MaximumConcurrency.GetHashCode()
+		^ this.InitialTransferSize.GetHashCode()
+		;
+
+	/// <summary>
+	/// Check if two ParallelTransferOptions instances are equal.
+	/// </summary>
+	/// <param name="left">The first instance to compare.</param>
+	/// <param name="right">The second instance to compare.</param>
+	/// <returns>True if they're equal, false otherwise.</returns>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public static bool operator ==(TransferOptions left, TransferOptions right) => left.Equals(right);
+
+	/// <summary>
+	/// Check if two ParallelTransferOptions instances are equal.
+	/// </summary>
+	/// <param name="left">The first instance to compare.</param>
+	/// <param name="right">The second instance to compare.</param>
+	/// <returns>True if they're not equal, false otherwise.</returns>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public static bool operator !=(TransferOptions left, TransferOptions right) => !(left == right);
+
+	/// <summary>
+	/// Check if two ParallelTransferOptions instances are equal.
+	/// </summary>
+	/// <param name="obj">The instance to compare to.</param>
+	/// <returns>True if they're equal, false otherwise.</returns>
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public readonly bool Equals(TransferOptions obj)
+		=> this.MaximumTransferSize == obj.MaximumTransferSize
+		&& this.MaximumConcurrency == obj.MaximumConcurrency
+		&& this.InitialTransferSize == obj.InitialTransferSize
+		;
+
+}

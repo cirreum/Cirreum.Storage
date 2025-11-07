@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Description>The Cirreum Storage Library.</Description>
+		<PackageTags>cirreum,storage</PackageTags>
+	</PropertyGroup>
+
+</Project>
